@@ -182,10 +182,13 @@
    <!-- 매장별 top5 매출액 -->
    <select id="selectdoughnut" resultMap="salesResultSet">
       <![CDATA[
-      SELECT ROWNUM, TOTALPRICE, STORE_NUM, STORE_NAME 
-      FROM STORE
-      WHERE ROWNUM <= 5 AND RANK_CODE = 1 AND TOTALPRICE > 0
-      ORDER BY TOTALPRICE DESC
+      SELECT TOTALPRICE , STORE_NUM, STORE_NAME , RANK_CODE
+      FROM (
+            SELECT TOTALPRICE , STORE_NUM, STORE_NAME, RANK_CODE
+            FROM STORE
+            ORDER BY TOTALPRICE DESC
+        )  
+      WHERE RANK_CODE = 1 AND TOTALPRICE > 0 AND ROWNUM <= 5
       ]]>
    </select>
    
